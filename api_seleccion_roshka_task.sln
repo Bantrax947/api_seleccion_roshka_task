@@ -6,8 +6,14 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{96E33C3A-C82F-4D64-B93D-DE3110EF1571}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{390A71A9-ADA4-4A17-9AA8-D3D59C8C1122}"
+	ProjectSection(ProjectDependencies) = postProject
+		{96E33C3A-C82F-4D64-B93D-DE3110EF1571} = {96E33C3A-C82F-4D64-B93D-DE3110EF1571}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{0E9699C7-5692-4AA2-8AF1-409F6A235E9F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{390A71A9-ADA4-4A17-9AA8-D3D59C8C1122} = {390A71A9-ADA4-4A17-9AA8-D3D59C8C1122}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

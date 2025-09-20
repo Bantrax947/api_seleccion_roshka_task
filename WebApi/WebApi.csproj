@@ -1,13 +1,33 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+	
+	<PropertyGroup>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
-  </ItemGroup>
+	<ItemGroup>
+	  <Compile Remove="wwwroot\**" />
+	  <Content Remove="wwwroot\**" />
+	  <EmbeddedResource Remove="wwwroot\**" />
+	  <None Remove="wwwroot\**" />
+	</ItemGroup>
 
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Dependecies\" />
+		<Folder Include="Validator\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Core\Core.csproj" />
+	</ItemGroup>
 </Project>

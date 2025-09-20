@@ -1,0 +1,10 @@
+﻿namespace Core.Enum
+{
+    public enum ErrorType
+    {
+        Error,
+        ErrorValidacion,
+        ErrorNoEncontrado,
+        ErrorAutenticacion,
+    }
+}
