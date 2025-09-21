@@ -22,6 +22,8 @@ builder.Services.AddDbContext<SqlServerDbContext>(options =>
 // Añade los servicios al contenedor de inyección de dependencias
 builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
+builder.Services.AddScoped<ISubTaskRepository, SubTaskRepository>();
+builder.Services.AddScoped<ISubTaskService, SubTaskService>();
 
 // Agregar FluentValidation y los validadores
 builder.Services.AddFluentValidationAutoValidation();
@@ -59,7 +61,7 @@ builder.Services.AddSwaggerGen(c =>
         {
             Name = "Fabian Franco",
             Email = "francofabian947@gmail.com",
-            Url = new Uri("https://www.tu-sitio.com")
+            Url = new Uri("https://www.linkedin.com/in/franco-fabian")
         }
     });
 

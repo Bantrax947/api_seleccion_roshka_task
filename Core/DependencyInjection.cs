@@ -9,6 +9,7 @@ namespace Infrastructure
         public static IServiceCollection AgregarCore(this IServiceCollection services)
         {
             services.AddTransient<ITaskService, TaskService>();   
+            services.AddTransient<ISubTaskService, SubTaskService>();
             return services;
         }
     }

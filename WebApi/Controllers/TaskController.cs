@@ -104,8 +104,6 @@ namespace WebApi.Controllers
             }
         }
 
-
-
         /// <summary>
         /// Método que obtiene una tarea específica por su Id.
         /// </summary>
