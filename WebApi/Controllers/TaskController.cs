@@ -4,6 +4,7 @@ using Core.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Core.Interfaces;
 using Core.Domain;
+using Core.Enum;
 
 namespace WebApi.Controllers
 {
@@ -37,23 +38,13 @@ namespace WebApi.Controllers
 
             try
             {
-                var tarea = new Tarea
-                {
-                    Titulo = request.Titulo,
-                    Descripcion = request.Descripcion,
-                    FechaCreacion = DateTime.Now,
-                    FechaVencimiento = request.FechaVencimiento,
-                    Estado = request.Estado,
-                    Prioridad = request.Prioridad
-                };
+                var tareaId = await _taskService.InsertarTarea(request);
 
-                var tareaId = await _taskService.InsertarTarea(tarea);
-                   
-                return StatusCode(StatusCodes.Status201Created, tareaId);
+                return CreatedAtAction(nameof(InsertarTarea), new { id = tareaId }, tareaId);
             }
-            catch(AppException ex)
+            catch (AppException ex)
             {
-                _logger.LogWarning(ex, "Ocurrio un error en la api");
+                _logger.LogWarning(ex, "Ocurrió un error en la api");
                 return StatusCode(StatusCodes.Status400BadRequest, CrearError(ex));
             }
             catch (Exception ex)
@@ -66,35 +57,37 @@ namespace WebApi.Controllers
         /// <summary>
         /// Método que lista todas las tareas de la base de datos con paginación
         /// </summary>
-        /// <param name="pagina">Número de página (por defecto 1)</param>
-        /// <param name="cantidadPorPagina">Cantidad de registros por página (por defecto 10)</param>
         /// <returns>Retorna un PagedResult con las tareas</returns>
         [HttpGet]
         [ProducesResponseType(typeof(PagedResult<Tarea>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> ObtenerTarea([FromQuery] int pagina = 1, [FromQuery] int cantidadPorPagina = 5)
+        public async Task<IActionResult> ObtenerTarea([FromQuery] PagedRequest request)
         {
-            _logger.LogInformation("Iniciando la petición para obtener tareas. Página: {Pagina}, Tamaño: {Cantidad}", pagina, cantidadPorPagina);
+            _logger.LogInformation("Iniciando la petición para obtener tareas. Página: {Pagina}, Cantidad: {Cantidad}", request.Page, request.Limit);
 
             try
             {
-                var resultado = await _taskService.ObtenerTarea(pagina, cantidadPorPagina);
+                var resultado = await _taskService.ObtenerTareasPaginadas(request);
 
                 if (resultado.Data == null || !resultado.Data.Any())
                 {
-                    _logger.LogWarning("No se encontraron tareas en la base de datos para la página {Pagina}.", pagina);
-                    return NoContent();
+                    _logger.LogInformation("No se encontraron tareas, devolviendo una lista vacía.");
+                    resultado.Data = new List<Tarea>();
                 }
 
-                _logger.LogInformation("Se obtuvieron {Cantidad} tareas para la página {Pagina}.", resultado.Data.Count, pagina);
+                _logger.LogInformation("Se obtuvieron {Cantidad} tareas para la página {Pagina}.", resultado.Data.Count, request.Page);
                 return Ok(resultado);
             }
             catch (AppException ex)
             {
-                _logger.LogWarning(ex, "Ocurrio un error en la api");
+                _logger.LogWarning(ex, "Ocurrió un error en la api");
+
+                if (ex.CodigoError == ErrorType.ErrorNoEncontrado)
+                {
+                    return NotFound(new ErrorResponse { ErrorMessage = ex.Message });
+                }
                 return StatusCode(StatusCodes.Status400BadRequest, CrearError(ex));
             }
             catch (Exception ex)
@@ -111,9 +104,9 @@ namespace WebApi.Controllers
         /// <returns>Retorna la tarea encontrada o 404 si no existe</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(Tarea), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> ObtenerTareaId([FromRoute] int id)
         {
@@ -123,18 +116,18 @@ namespace WebApi.Controllers
             {
                 var tarea = await _taskService.ObtenerTareaId(id);
 
-                if (tarea == null)
-                {
-                    _logger.LogWarning("No se encontró ninguna tarea con Id {Id}.", id);
-                    return NoContent();
-                }
-
                 _logger.LogInformation("Tarea con Id {Id} obtenida exitosamente.", id);
                 return Ok(tarea);
             }
             catch (AppException ex)
             {
                 _logger.LogWarning(ex, "Ocurrió un error en la API al obtener tarea con Id {Id}", id);
+
+                if (ex.CodigoError == ErrorType.ErrorNoEncontrado)
+                {
+                    return NotFound(CrearError(ex));
+                }
+
                 return StatusCode(StatusCodes.Status400BadRequest, CrearError(ex));
             }
             catch (Exception ex)
@@ -149,10 +142,10 @@ namespace WebApi.Controllers
         /// Método que actualiza una tarea existente
         /// </summary>
         [HttpPut("{id:int}")]
-        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(string),StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> ActualizarTarea(int id, [FromBody] ActualizarTareaRequest request)
         {
@@ -160,26 +153,18 @@ namespace WebApi.Controllers
 
             try
             {
-                var tarea = new Tarea
-                {
-                    Id = id,
-                    Titulo = request.Titulo,
-                    Descripcion = request.Descripcion,
-                    FechaVencimiento = request.FechaVencimiento ?? DateTime.Now,
-                    Estado = request.Estado,
-                    Prioridad = request.Prioridad
-                };
+                await _taskService.ActualizarTarea(id, request);
 
-                var actualizado = await _taskService.ActualizarTarea(tarea);
-
-                if (!actualizado)
-                    return NoContent();
-
-                return Ok("Tarea actualizada correctamente."); 
+                _logger.LogInformation("Tarea actualizada correctamente.");
+                return Ok("Tarea actualizada correctamente.");
             }
             catch (AppException ex)
             {
                 _logger.LogWarning(ex, "Error de validación en la API");
+                if (ex.CodigoError == ErrorType.ErrorNoEncontrado)
+                {
+                    return NotFound(CrearError(ex));
+                }
                 return BadRequest(CrearError(ex));
             }
             catch (Exception ex)
@@ -195,10 +180,10 @@ namespace WebApi.Controllers
         /// </summary>
         /// <returns>Retorna el Id generado para esa tarea</returns>
         [HttpDelete("{id:int}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> EliminarTarea(int id)
         {
@@ -206,23 +191,24 @@ namespace WebApi.Controllers
 
             try
             {
-                var eliminado = await _taskService.EliminarTarea(id);
-
-                if (!eliminado)
-                    return NoContent(); 
+                await _taskService.EliminarTarea(id);
 
                 return Ok("Tarea eliminada");
             }
             catch (AppException ex)
             {
                 _logger.LogWarning(ex, "Ocurrió un error en la API");
-                return BadRequest(CrearError(ex)); 
+                if (ex.CodigoError == Core.Enum.ErrorType.ErrorNoEncontrado)
+                {
+                    return NotFound(CrearError(ex));
+                }
+                return BadRequest(CrearError(ex));
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error al eliminar tarea");
                 return StatusCode(StatusCodes.Status500InternalServerError, CrearError(ex));
             }
-        }       
+        }
     }
 }

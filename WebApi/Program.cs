@@ -6,7 +6,6 @@ using WebApi.Validator;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
-using System.IO;
 using Core.Interfaces;
 using Core.Services;
 using Infrastructure.Repositories;
@@ -15,23 +14,16 @@ using WebApi.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configuración de la base de datos
 builder.Services.AddDbContext<SqlServerDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Añade los servicios al contenedor de inyección de dependencias
 builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<ISubTaskRepository, SubTaskRepository>();
 builder.Services.AddScoped<ISubTaskService, SubTaskService>();
-
-// Agregar FluentValidation y los validadores
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<TareaRequestValidator>();
-
-// Agregar tu lógica de autenticación
 builder.Services.AddApiKeyAuthentication(builder.Configuration);
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.Configure<ApiBehaviorOptions>(options =>
@@ -106,10 +98,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 app.UseHttpsRedirection();
-
-// Asegúrate de que UseAuthentication esté antes de UseAuthorization
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 app.Run();

@@ -30,16 +30,24 @@ namespace Infrastructure.Repositories
             return tarea.Id;
         }
 
-        public async Task<PagedResult<Tarea>> ObtenerTarea(int pagina, int cantidadPorPagina)
+        public async Task<PagedResult<Tarea>> ObtenerTareasPaginadas(int pagina, int cantidadPorPagina, string? order)
         {
             _logger.LogInformation("Consultando tareas con paginación. Página {Pagina}, Tamaño {Cantidad}", pagina, cantidadPorPagina);
 
             var query = _context.Tareas.AsNoTracking();
 
+            if (order?.ToLower() == "desc")
+            {
+                query = query.OrderByDescending(t => t.FechaCreacion);
+            }
+            else
+            {
+                query = query.OrderBy(t => t.FechaCreacion);
+            }
+
             var totalRegistros = await query.CountAsync();
 
             var datos = await query
-                .OrderByDescending(t => t.FechaCreacion)
                 .Skip((pagina - 1) * cantidadPorPagina)
                 .Take(cantidadPorPagina)
                 .ToListAsync();

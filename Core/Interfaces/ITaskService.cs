@@ -6,14 +6,14 @@ namespace Core.Interfaces
 {
     public interface ITaskService
     {
-        Task<int> InsertarTarea(Tarea tarea);
+        Task<int> InsertarTarea(TareaRequest request);
 
-        Task<PagedResult<Tarea>> ObtenerTarea(int pagina, int cantidadPorPagina);
+        Task<PagedResult<Tarea>> ObtenerTareasPaginadas(PagedRequest request);
 
-        Task<Tarea?> ObtenerTareaId(int id);
+        Task<Tarea> ObtenerTareaId(int id);
 
-        Task<bool> ActualizarTarea(Tarea tarea);
+        Task ActualizarTarea(int id, ActualizarTareaRequest request);
 
-        Task<bool> EliminarTarea(int id);
+        Task EliminarTarea(int id);
     }
 }

@@ -7,7 +7,7 @@ namespace Core.Interfaces
     {
         Task<int> InsertarTarea(Tarea tarea);
 
-        Task<PagedResult<Tarea>> ObtenerTarea(int pagina, int cantidadPorPagina);
+        Task<PagedResult<Tarea>> ObtenerTareasPaginadas(int pagina, int cantidadPorPagina, string? order);
 
         Task<Tarea?> ObtenerTareaId(int id);
 
