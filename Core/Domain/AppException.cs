@@ -4,11 +4,11 @@ namespace Core.Domain
 {
     public class AppException : Exception 
     {
-        public ErrorType CodigoError;
+        public ErrorType CodigoError { get; }
 
-        public AppException(ErrorType codigoError, string mensajeError) : base(mensajeError)
+        public AppException(string message, ErrorType errorType) : base(message)
         {
-            CodigoError = codigoError;
+            CodigoError = errorType;
         }
     }
 }

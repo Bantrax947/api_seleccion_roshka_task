@@ -20,5 +20,14 @@ namespace WebApi.Controllers
             };
             return (error);
         }
+        protected ErrorResponse CrearError(Exception exception)
+        {
+            var error = new ErrorResponse()
+            {
+                ErrorType = (ErrorType)Enum.Parse(typeof(ErrorType), ErrorType.ErrorInternoServidor.ToString()),
+                ErrorMessage = exception.Message
+            };
+            return (error);
+        }
     }
 }

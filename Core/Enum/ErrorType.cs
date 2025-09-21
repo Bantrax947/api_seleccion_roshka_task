@@ -4,6 +4,7 @@
     {
         Error,
         ErrorValidacion,
+        ErrorInternoServidor,
         ErrorNoEncontrado,
         ErrorAutenticacion,
     }
