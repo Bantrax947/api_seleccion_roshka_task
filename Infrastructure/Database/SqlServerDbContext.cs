@@ -12,7 +12,6 @@ namespace Infrastructure.Database
 
         public DbSet<Tarea> Tareas { get; set; }
         public DbSet<SubTarea> Subtareas { get; set; }
-        public DbSet<HistorialTarea> HistorialTareas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
