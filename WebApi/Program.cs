@@ -46,9 +46,9 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "API de Gestión de Tareas",
+        Title = "Api Roshka",
         Version = "v1",
-        Description = "Una API REST para gestionar tareas y subtareas, incluyendo operaciones CRUD y paginación.",
+        Description = "Api Rest para gestionar tareas y subtareas para entrevista técnica ROSHKA",
         Contact = new OpenApiContact
         {
             Name = "Fabian Franco",
