@@ -30,5 +30,5 @@ El objetivo es gestionar **Tareas** y **Subtareas**, aplicando validaciones, log
 ### 1️⃣ Clonar el repositorio
 
 ```bash
-git clone https://github.com/tu-usuario/api-roshka.git
-cd api-roshka
+git clone https://github.com/Bantrax947/api_seleccion_roshka_task.git
+cd api_seleccion_roshka_task
