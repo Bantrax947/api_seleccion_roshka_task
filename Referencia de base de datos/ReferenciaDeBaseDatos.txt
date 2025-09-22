@@ -1,0 +1,27 @@
+Nombre de base : Db_Tareas_Roshka
+
+Estructura te tablas
+
+create table tareas (
+id int primary key identity(1,1),
+titulo nvarchar(255) not null,
+descripcion nvarchar(255) null,
+fechacreacion datetime2(7) not null default getdate(),
+fechavencimiento datetime2(7) null,
+estado nvarchar(50) not null check (estado in ('pendiente', 'enprogreso', 'completada', 'cancelada')),
+prioridad int not null check (prioridad between 1 and 5),
+constraint uq_tareas_titulo unique (titulo)
+);
+go
+
+create table subtareas (
+id int primary key identity(1,1),
+tareaid int not null,
+titulo nvarchar(255) not null,
+estado bit not null default 0,
+fechacreacion datetime2(7) not null default getdate(),
+constraint fk_subtareas_tareas foreign key (tareaid) references tareas(id) on delete cascade
+);
+go
+
+Obs: Con esto solo debería de crear una base con este nombre de Db, esta estrcutrura de tablas y e incluso dentro de su SQL Server Management Studio crear un usuario y contraseña(Pueden utilizar el mismo de mi .env para evitarse tener que cambiar) y darle acceso a esa única tabla en el apartado de Security en su explorador de objetos, asegúrense de darle los granteos de read y write al usuario que van a crear para que les funcione
