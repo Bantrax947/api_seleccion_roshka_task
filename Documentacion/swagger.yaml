@@ -1,0 +1,1502 @@
+{
+  "openapi": "3.0.1",
+  "información": {
+    "título": "Api Roshka",
+    "description": "Api Rest para gestionar tareas y subtareas para entrevista técnica ROSHKA",
+    "contacto": {
+      "nombre": "Fabián Franco",
+      "url": "https://www.linkedin.com/in/franco-fabian",
+      "correo electrónico": "francofabian947@gmail.com"
+    },
+    "versión": "v1"
+  },
+  "caminos": {
+    "/v1/api/subTarea/{IdDeTarea}/subTarea": ​​{
+      "correo": {
+        "etiquetas": [
+          "Subtarea"
+        ],
+        "summary": "Método para insertar una Subtarea en la base de datos",
+        "parámetros": [
+          {
+            "nombre": "tareaId",
+            "en": "ruta",
+            "description": "Id de la tarea a la que pertenece la subtarea",
+            "obligatorio": verdadero,
+            "esquema": {
+              "tipo": "entero",
+              "description": "Id de la tarea a la que pertenece la subtarea",
+              "formato": "int32"
+            }
+          }
+        ],
+        "cuerpo de la solicitud": {
+          "description": "Datos de la subtarea",
+          "contenido": {
+            "aplicación/json": {
+              "esquema": {
+                "$ref": "#/componentes/esquemas/SolicitudDeSubTarea"
+              }
+            },
+            "texto/json": {
+              "esquema": {
+                "$ref": "#/componentes/esquemas/SolicitudDeSubTarea"
+              }
+            },
+            "aplicación/*+json": {
+              "esquema": {
+                "$ref": "#/componentes/esquemas/SolicitudDeSubTarea"
+              }
+            }
+          }
+        },
+        "respuestas": {
+          "201": {
+            "description": "Éxito",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "tipo": "entero",
+                  "formato": "int32"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "tipo": "entero",
+                  "formato": "int32"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "tipo": "entero",
+                  "formato": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud incorrecta",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No encontrado",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error del servidor",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "conseguir": {
+        "etiquetas": [
+          "Subtarea"
+        ],
+        "summary": "Método que consulta todas las Subtareas en la base de datos",
+        "parámetros": [
+          {
+            "nombre": "tareaId",
+            "en": "ruta",
+            "obligatorio": verdadero,
+            "esquema": {
+              "tipo": "entero",
+              "formato": "int32"
+            }
+          },
+          {
+            "nombre": "Página",
+            "en": "consulta",
+            "esquema": {
+              "tipo": "entero",
+              "formato": "int32"
+            }
+          },
+          {
+            "nombre": "Límite",
+            "en": "consulta",
+            "esquema": {
+              "tipo": "entero",
+              "formato": "int32"
+            }
+          },
+          {
+            "nombre": "Pedido",
+            "en": "consulta",
+            "esquema": {
+              "tipo": "cadena",
+              "anulable": verdadero
+            }
+          }
+        ],
+        "respuestas": {
+          "200": {
+            "description": "Éxito",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/SubTareaPagedResult"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/SubTareaPagedResult"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/SubTareaPagedResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No encontrado",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error del servidor",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/api/subTarea/{IdDeTarea}/subTarea/{IdDeTarea}": {
+      "conseguir": {
+        "etiquetas": [
+          "Subtarea"
+        ],
+        "summary": "Método que consulta una Subtarea específica en la base de datos",
+        "parámetros": [
+          {
+            "nombre": "tareaId",
+            "en": "ruta",
+            "description": "Id de la tarea a la que pertenece la subtarea",
+            "obligatorio": verdadero,
+            "esquema": {
+              "tipo": "entero",
+              "description": "Id de la tarea a la que pertenece la subtarea",
+              "formato": "int32"
+            }
+          },
+          {
+            "nombre": "subTareaId",
+            "en": "ruta",
+            "description": "Id de la subtarea a consultar",
+            "obligatorio": verdadero,
+            "esquema": {
+              "tipo": "entero",
+              "description": "Id de la subtarea a consultar",
+              "formato": "int32"
+            }
+          }
+        ],
+        "respuestas": {
+          "200": {
+            "description": "Éxito",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/SubTarea"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/SubTarea"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/SubTarea"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No encontrado",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error del servidor",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "poner": {
+        "etiquetas": [
+          "Subtarea"
+        ],
+        "summary": "Método que actualiza una Subtarea especifica en la base de datos",
+        "parámetros": [
+          {
+            "nombre": "tareaId",
+            "en": "ruta",
+            "description": "Id de la tarea padre",
+            "obligatorio": verdadero,
+            "esquema": {
+              "tipo": "entero",
+              "description": "Id de la tarea padre",
+              "formato": "int32"
+            }
+          },
+          {
+            "nombre": "subTareaId",
+            "en": "ruta",
+            "description": "Id de la subtarea a actualizar",
+            "obligatorio": verdadero,
+            "esquema": {
+              "tipo": "entero",
+              "description": "Id de la subtarea a actualizar",
+              "formato": "int32"
+            }
+          }
+        ],
+        "cuerpo de la solicitud": {
+          "description": "Datos de la subtarea a actualizar",
+          "contenido": {
+            "aplicación/json": {
+              "esquema": {
+                "$ref": "#/componentes/esquemas/ActualizarSubTareaRequest"
+              }
+            },
+            "texto/json": {
+              "esquema": {
+                "$ref": "#/componentes/esquemas/ActualizarSubTareaRequest"
+              }
+            },
+            "aplicación/*+json": {
+              "esquema": {
+                "$ref": "#/componentes/esquemas/ActualizarSubTareaRequest"
+              }
+            }
+          }
+        },
+        "respuestas": {
+          "200": {
+            "description": "Éxito",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud incorrecta",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No encontrado",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error del servidor",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "borrar": {
+        "etiquetas": [
+          "Subtarea"
+        ],
+        "summary": "Método para eliminar una Subtarea específica en la base de datos",
+        "parámetros": [
+          {
+            "nombre": "tareaId",
+            "en": "ruta",
+            "description": "Id de la tarea padre",
+            "obligatorio": verdadero,
+            "esquema": {
+              "tipo": "entero",
+              "description": "Id de la tarea padre",
+              "formato": "int32"
+            }
+          },
+          {
+            "nombre": "subTareaId",
+            "en": "ruta",
+            "description": "Id de la subtarea a eliminar",
+            "obligatorio": verdadero,
+            "esquema": {
+              "tipo": "entero",
+              "description": "Id de la subtarea a eliminar",
+              "formato": "int32"
+            }
+          }
+        ],
+        "respuestas": {
+          "200": {
+            "description": "Éxito"
+          },
+          "400": {
+            "description": "Solicitud incorrecta",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No encontrado",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error del servidor",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/api/tarea": ​​{
+      "correo": {
+        "etiquetas": [
+          "Tarea"
+        ],
+        "summary": "Método para insertar una tarea en la base de datos",
+        "cuerpo de la solicitud": {
+          "description": "Datos para la nueva tarea",
+          "contenido": {
+            "aplicación/json": {
+              "esquema": {
+                "$ref": "#/componentes/esquemas/TareaRequest"
+              }
+            },
+            "texto/json": {
+              "esquema": {
+                "$ref": "#/componentes/esquemas/TareaRequest"
+              }
+            },
+            "aplicación/*+json": {
+              "esquema": {
+                "$ref": "#/componentes/esquemas/TareaRequest"
+              }
+            }
+          }
+        },
+        "respuestas": {
+          "201": {
+            "description": "Éxito",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "tipo": "entero",
+                  "formato": "int32"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "tipo": "entero",
+                  "formato": "int32"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "tipo": "entero",
+                  "formato": "int32"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud incorrecta",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error del servidor",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              }
+            }
+          }
+        }
+      },
+      "conseguir": {
+        "etiquetas": [
+          "Tarea"
+        ],
+        "summary": "Método que lista todas las tareas de la base de datos con paginación",
+        "parámetros": [
+          {
+            "nombre": "Página",
+            "en": "consulta",
+            "esquema": {
+              "tipo": "entero",
+              "formato": "int32"
+            }
+          },
+          {
+            "nombre": "Límite",
+            "en": "consulta",
+            "esquema": {
+              "tipo": "entero",
+              "formato": "int32"
+            }
+          },
+          {
+            "nombre": "Pedido",
+            "en": "consulta",
+            "esquema": {
+              "tipo": "cadena",
+              "anulable": verdadero
+            }
+          }
+        ],
+        "respuestas": {
+          "200": {
+            "description": "Éxito",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/TareaPagedResult"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/TareaPagedResult"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/TareaPagedResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud incorrecta",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error del servidor",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/api/tarea/{id}": {
+      "conseguir": {
+        "etiquetas": [
+          "Tarea"
+        ],
+        "summary": "Método para obtener una tarea específica por su Id.",
+        "parámetros": [
+          {
+            "nombre": "id",
+            "en": "ruta",
+            "description": "Id. de la tarea",
+            "obligatorio": verdadero,
+            "esquema": {
+              "tipo": "entero",
+              "description": "Id. de la tarea",
+              "formato": "int32"
+            }
+          }
+        ],
+        "respuestas": {
+          "200": {
+            "description": "Éxito",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/Tarea"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/Tarea"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/Tarea"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No encontrado",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud incorrecta",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error del servidor",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "poner": {
+        "etiquetas": [
+          "Tarea"
+        ],
+        "summary": "Método para actualizar una tarea existente",
+        "parámetros": [
+          {
+            "nombre": "id",
+            "en": "ruta",
+            "obligatorio": verdadero,
+            "esquema": {
+              "tipo": "entero",
+              "formato": "int32"
+            }
+          }
+        ],
+        "cuerpo de la solicitud": {
+          "contenido": {
+            "aplicación/json": {
+              "esquema": {
+                "$ref": "#/componentes/esquemas/ActualizarTareaRequest"
+              }
+            },
+            "texto/json": {
+              "esquema": {
+                "$ref": "#/componentes/esquemas/ActualizarTareaRequest"
+              }
+            },
+            "aplicación/*+json": {
+              "esquema": {
+                "$ref": "#/componentes/esquemas/ActualizarTareaRequest"
+              }
+            }
+          }
+        },
+        "respuestas": {
+          "200": {
+            "description": "Éxito",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud incorrecta",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No encontrado",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error del servidor",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "borrar": {
+        "etiquetas": [
+          "Tarea"
+        ],
+        "summary": "Método que lista todas las tareas de la base de datos",
+        "parámetros": [
+          {
+            "nombre": "id",
+            "en": "ruta",
+            "obligatorio": verdadero,
+            "esquema": {
+              "tipo": "entero",
+              "formato": "int32"
+            }
+          }
+        ],
+        "respuestas": {
+          "200": {
+            "description": "Éxito",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud incorrecta",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "tipo": "cadena"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No encontrado",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error del servidor",
+            "contenido": {
+              "texto/sin formato": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "aplicación/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              },
+              "texto/json": {
+                "esquema": {
+                  "$ref": "#/componentes/esquemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "componentes": {
+    "esquemas": {
+      "Solicitud de subtareas": {
+        "tipo": "objeto",
+        "propiedades": {
+          "título": {
+            "tipo": "cadena",
+            "anulable": verdadero
+          },
+          "estado": {
+            "tipo": "booleano"
+          }
+        },
+        "Propiedades adicionales": falso
+      },
+      "Tipo de error": {
+        "enumeración": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "tipo": "entero",
+        "formato": "int32"
+      },
+      "Respuesta de error": {
+        "tipo": "objeto",
+        "propiedades": {
+          "tipo de error": {
+            "$ref": "#/componentes/esquemas/TipoDeError"
+          },
+          "Mensaje de error": {
+            "tipo": "cadena",
+            "anulable": verdadero
+          }
+        },
+        "Propiedades adicionales": falso
+      },
+      "SubTarea": ​​{
+        "tipo": "objeto",
+        "propiedades": {
+          "identificación": {
+            "tipo": "entero",
+            "formato": "int32"
+          },
+          "Id. de tarea": ​​{
+            "tipo": "entero",
+            "formato": "int32"
+          },
+          "título": {
+            "tipo": "cadena",
+            "anulable": verdadero
+          },
+          "estado": {
+            "tipo": "booleano"
+          },
+          "fechaCreacion": {
+            "tipo": "cadena",
+            "formato": "fecha-hora"
+          }
+        },
+        "Propiedades adicionales": falso
+      },
+      "Meta": {
+        "tipo": "objeto",
+        "propiedades": {
+          "total": {
+            "tipo": "entero",
+            "formato": "int32"
+          },
+          "página": {
+            "tipo": "entero",
+            "formato": "int32"
+          },
+          "totalPáginas": {
+            "tipo": "entero",
+            "formato": "int32"
+          }
+        },
+        "Propiedades adicionales": falso
+      },
+      "ResultadoPaginadoSubTarea": ​​{
+        "tipo": "objeto",
+        "propiedades": {
+          "datos": {
+            "tipo": "matriz",
+            "elementos": {
+              "$ref": "#/componentes/esquemas/SubTarea"
+            },
+            "anulable": verdadero
+          },
+          "meta": {
+            "$ref": "#/componentes/esquemas/Meta"
+          }
+        },
+        "Propiedades adicionales": falso
+      },
+      "ActualizarSubTareaRequest": {
+        "tipo": "objeto",
+        "propiedades": {
+          "título": {
+            "tipo": "cadena",
+            "anulable": verdadero
+          },
+          "estado": {
+            "tipo": "booleano"
+          }
+        },
+        "Propiedades adicionales": falso
+      },
+      "Solicitud de tarea": ​​{
+        "tipo": "objeto",
+        "propiedades": {
+          "fechaVencimiento": {
+            "tipo": "cadena",
+            "formato": "fecha-hora"
+          },
+          "descripcion": {
+            "tipo": "cadena",
+            "anulable": verdadero
+          },
+          "título": {
+            "tipo": "cadena",
+            "anulable": verdadero
+          },
+          "estado": {
+            "tipo": "cadena",
+            "anulable": verdadero
+          },
+          "prioridad": {
+            "tipo": "entero",
+            "formato": "int32"
+          }
+        },
+        "Propiedades adicionales": falso
+      },
+      "Tarea": ​​{
+        "tipo": "objeto",
+        "propiedades": {
+          "identificación": {
+            "tipo": "entero",
+            "formato": "int32"
+          },
+          "título": {
+            "tipo": "cadena",
+            "anulable": verdadero
+          },
+          "descripcion": {
+            "tipo": "cadena",
+            "anulable": verdadero
+          },
+          "fechaCreacion": {
+            "tipo": "cadena",
+            "formato": "fecha-hora"
+          },
+          "fechaVencimiento": {
+            "tipo": "cadena",
+            "formato": "fecha-hora",
+            "anulable": verdadero
+          },
+          "estado": {
+            "tipo": "cadena",
+            "anulable": verdadero
+          },
+          "prioridad": {
+            "tipo": "entero",
+            "formato": "int32"
+          }
+        },
+        "Propiedades adicionales": falso
+      },
+      "Resultado de la tarea": ​​{
+        "tipo": "objeto",
+        "propiedades": {
+          "datos": {
+            "tipo": "matriz",
+            "elementos": {
+              "$ref": "#/componentes/esquemas/Tarea"
+            },
+            "anulable": verdadero
+          },
+          "meta": {
+            "$ref": "#/componentes/esquemas/Meta"
+          }
+        },
+        "Propiedades adicionales": falso
+      },
+      "ActualizarTareaRequest": {
+        "tipo": "objeto",
+        "propiedades": {
+          "fechaVencimiento": {
+            "tipo": "cadena",
+            "formato": "fecha-hora",
+            "anulable": verdadero
+          },
+          "descripcion": {
+            "tipo": "cadena",
+            "anulable": verdadero
+          },
+          "título": {
+            "tipo": "cadena",
+            "anulable": verdadero
+          },
+          "estado": {
+            "tipo": "cadena",
+            "anulable": verdadero
+          },
+          "prioridad": {
+            "tipo": "entero",
+            "formato": "int32"
+          }
+        },
+        "Propiedades adicionales": falso
+      }
+    },
+    "esquemas de seguridad": {
+      "Clave API": {
+        "tipo": "apiKey",
+        "description": "Ingresa tu API Key en el campo de valor",
+        "nombre": "X-API-KEY",
+        "en": "encabezado"
+      }
+    }
+  },
+  "seguridad": [
+    {
+      "Clave API": [ ]
+    }
+  ]
+}

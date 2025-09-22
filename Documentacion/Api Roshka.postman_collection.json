@@ -1,0 +1,510 @@
+{
+	"info": {
+		"_postman_id": "729aef84-6968-48b8-ab92-27348d763bbb",
+		"name": "Api Roshka",
+		"description": "Prueba técnica para Fabián Franco con .Net",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36032206"
+	},
+	"item": [
+		{
+			"name": "Tareas",
+			"item": [
+				{
+					"name": "Insertar Tarea",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fechaVencimiento\": \"2025-09-21T15:19:57.811Z\",\r\n  \"titulo\": \"Prueba Post Api Roshka\",\r\n  \"descripcion\": \"\",\r\n  \"estado\": \"Cancelada\",\r\n  \"prioridad\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7063/v1/api/task",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7063",
+							"path": [
+								"v1",
+								"api",
+								"task"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerTareas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7063/v1/api/task?Page=1&Limit=10&Order=desc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7063",
+							"path": [
+								"v1",
+								"api",
+								"task"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "1"
+								},
+								{
+									"key": "Limit",
+									"value": "10"
+								},
+								{
+									"key": "Order",
+									"value": "desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerTareaPorId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7063/v1/api/task/:idTarea",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7063",
+							"path": [
+								"v1",
+								"api",
+								"task",
+								":idTarea"
+							],
+							"variable": [
+								{
+									"key": "idTarea",
+									"value": "8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ActualizarTarea",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "hjusdgas7y3r283293fn2893ch82",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "X-API-KEY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fechaVencimiento\": \"2025-09-21T15:42:09.790Z\",\r\n  \"titulo\": \"\",\r\n  \"descripcion\": \"Aceptenme:c\",\r\n  \"estado\": \"CualquierCosa\",\r\n  \"prioridad\": 14000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7063/v1/api/task/:idTarea",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7063",
+							"path": [
+								"v1",
+								"api",
+								"task",
+								":idTarea"
+							],
+							"variable": [
+								{
+									"key": "idTarea",
+									"value": "22"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EliminarTarea",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "hjusdgas7y3r283293fn2893ch82",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "X-API-KEY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7063/v1/api/task/:idTarea",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7063",
+							"path": [
+								"v1",
+								"api",
+								"task",
+								":idTarea"
+							],
+							"variable": [
+								{
+									"key": "idTarea",
+									"value": "22"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "hjusdgas7y3r283293fn2893ch82",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "X-API-KEY",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "SubTarea",
+			"item": [
+				{
+					"name": "InsertarSubTarea",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "hjusdgas7y3r283293fn2893ch82",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "X-API-KEY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"titulo\": \"Insercion SubTarea Roshka v3\",\r\n  \"estado\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7063/v1/api/subTask/:idTarea/subTarea",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7063",
+							"path": [
+								"v1",
+								"api",
+								"subTask",
+								":idTarea",
+								"subTarea"
+							],
+							"variable": [
+								{
+									"key": "idTarea",
+									"value": "5",
+									"description": "El Id de la Tarea"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObtenerSubTareas",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "hjusdgas7y3r283293fn2893ch82",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "X-API-KEY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7063/v1/api/subTask/:tareaId/subTarea?page=1&limit=10&order=desc",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7063",
+							"path": [
+								"v1",
+								"api",
+								"subTask",
+								":tareaId",
+								"subTarea"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Cantidad de paginas"
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"description": "Limite de paginas"
+								},
+								{
+									"key": "order",
+									"value": "desc",
+									"description": "Orden de archivos"
+								}
+							],
+							"variable": [
+								{
+									"key": "tareaId",
+									"value": "5",
+									"description": "Id de la tarea "
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ActualizarSubTarea",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "hjusdgas7y3r283293fn2893ch82",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "X-API-KEY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"titulo\": \"Prueba de PUT Roshka\",\r\n  \"estado\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7063/v1/api/subTask/:tareaId/subTarea/:subTareaId",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7063",
+							"path": [
+								"v1",
+								"api",
+								"subTask",
+								":tareaId",
+								"subTarea",
+								":subTareaId"
+							],
+							"variable": [
+								{
+									"key": "tareaId",
+									"value": "53423423",
+									"description": "Id de la tarea"
+								},
+								{
+									"key": "subTareaId",
+									"value": "10",
+									"description": "Id de la SubTarea"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EliminarSubTarea",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "hjusdgas7y3r283293fn2893ch82",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "X-API-KEY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7063/v1/api/subTask/:tareaId/subTarea/:subTareaId",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7063",
+							"path": [
+								"v1",
+								"api",
+								"subTask",
+								":tareaId",
+								"subTarea",
+								":subTareaId"
+							],
+							"variable": [
+								{
+									"key": "tareaId",
+									"value": "5",
+									"description": "Id de la tarea"
+								},
+								{
+									"key": "subTareaId",
+									"value": "10",
+									"description": "Id de la subTarea"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "hjusdgas7y3r283293fn2893ch82",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "X-API-KEY",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
