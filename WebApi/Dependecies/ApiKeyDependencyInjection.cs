@@ -5,13 +5,19 @@ namespace WebApi.Dependencies
 {
     public static class ApiKeyDependencyInjection
     {
-        public static IServiceCollection AddApiKeyAuthentication(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddApiKeyAuthentication(
+            this IServiceCollection services,
+            string apiKeyHeader,
+            string apiKeyRealm,
+            string apiKeySecret)
         {
+            services.AddSingleton(apiKeySecret);
+
             services.AddAuthentication(ApiKeyDefaults.AuthenticationScheme)
                 .AddApiKeyInHeaderOrQueryParams<FabianFrancoApiKeyProvider>(options =>
                 {
-                    options.Realm = configuration.GetValue<string>("ApiKeyConfig:Realm");
-                    options.KeyName = configuration.GetValue<string>("ApiKeyConfig:Header");
+                    options.Realm = apiKeyRealm;
+                    options.KeyName = apiKeyHeader;
                     options.SuppressWWWAuthenticateHeader = false;
                 });
 
@@ -25,39 +31,24 @@ namespace WebApi.Dependencies
     public class FabianFrancoApiKeyProvider : IApiKeyProvider
     {
         private readonly ILogger<FabianFrancoApiKeyProvider> _logger;
-        public string ApiKey => _apiKey;
         private readonly string _apiKey;
 
-        public FabianFrancoApiKeyProvider(ILogger<FabianFrancoApiKeyProvider> logger, IConfiguration configuration)
+        public FabianFrancoApiKeyProvider(ILogger<FabianFrancoApiKeyProvider> logger, string apiKeySecret)
         {
             _logger = logger;
-            _apiKey = configuration.GetValue<string>("ApiKeyConfig:Key")!;
-
-            if (_apiKey is null)
-            {
-                throw new ArgumentException("No se encuentra el ApiKey en la configuracion.");
-            }
+            _apiKey = apiKeySecret ?? throw new ArgumentNullException(nameof(apiKeySecret));
         }
 
         public Task<IApiKey> ProvideAsync(string key)
         {
-            try
+            if (key.Equals(_apiKey))
             {
-                if (key.Equals(_apiKey))
-                {
-                    _logger.LogDebug("Key valido");
-                    return Task.FromResult<IApiKey>(new FabianFrancoApiKey(key));
-                }
-
-                _logger.LogWarning("Key no valido");
-
-                return Task.FromResult<IApiKey>(null);
+                _logger.LogDebug("Key valido");
+                return Task.FromResult<IApiKey>(new FabianFrancoApiKey(key));
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Mensaje: {Mensaje}", ex.Message);
-                throw new ArgumentException("Error al verificar apiKey");
-            }
+
+            _logger.LogWarning("Key no valido");
+            return Task.FromResult<IApiKey>(null);
         }
     }
 
@@ -70,6 +61,7 @@ namespace WebApi.Dependencies
         public FabianFrancoApiKey(string key)
         {
             Key = key;
+            Claims = Array.Empty<Claim>();
         }
     }
 }

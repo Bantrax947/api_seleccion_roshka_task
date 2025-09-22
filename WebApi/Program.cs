@@ -1,3 +1,4 @@
+﻿using DotNetEnv;
 using Infrastructure.Database;
 using WebApi.Dependencies;
 using FluentValidation.AspNetCore;
@@ -14,16 +15,32 @@ using WebApi.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Env.Load();
+
+var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+var apiKeyHeader = Environment.GetEnvironmentVariable("API_KEY_HEADER");
+var apiKeyRealm = Environment.GetEnvironmentVariable("API_KEY_REALM");
+var apiKeySecret = Environment.GetEnvironmentVariable("API_KEY_SECRET");
+
+if (string.IsNullOrEmpty(connectionString))
+    throw new InvalidOperationException("DB_CONNECTION_STRING no está definida en el .env");
+
+if (string.IsNullOrEmpty(apiKeySecret))
+    throw new InvalidOperationException("API_KEY_SECRET no está definida en el .env");
+
 builder.Services.AddDbContext<SqlServerDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<ISubTaskRepository, SubTaskRepository>();
 builder.Services.AddScoped<ISubTaskService, SubTaskService>();
+
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<TareaRequestValidator>();
-builder.Services.AddApiKeyAuthentication(builder.Configuration);
+
+builder.Services.AddApiKeyAuthentication(apiKeyHeader!, apiKeyRealm!, apiKeySecret!);
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.Configure<ApiBehaviorOptions>(options =>
@@ -35,7 +52,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
             .Where(ms => ms.Value.Errors.Count > 0)
             .Select(ms => new { Campo = ms.Key, Errores = ms.Value.Errors.Select(e => e.ErrorMessage) });
 
-        logger.LogWarning("Validaci�n fallida en {Controller}: {@Errores}",
+        logger.LogWarning("Validación fallida en {Controller}: {@Errores}",
             context.ActionDescriptor.DisplayName, errores);
 
         return new BadRequestObjectResult(new ValidationProblemDetails(context.ModelState));
@@ -48,7 +65,7 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "Api Roshka",
         Version = "v1",
-        Description = "Api Rest para gestionar tareas y subtareas para entrevista t�cnica ROSHKA",
+        Description = "Api Rest para gestionar tareas y subtareas para entrevista técnica ROSHKA",
         Contact = new OpenApiContact
         {
             Name = "Fabian Franco",
@@ -61,7 +78,7 @@ builder.Services.AddSwaggerGen(c =>
     {
         In = ParameterLocation.Header,
         Description = "Ingresa tu API Key en el campo de valor",
-        Name = "X-API-KEY",
+        Name = apiKeyHeader,
         Type = SecuritySchemeType.ApiKey,
         Scheme = "ApiKeyScheme"
     });
@@ -97,6 +114,7 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "API de Tareas v1");
     });
 }
+
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
